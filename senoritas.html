@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+    <title>Test</title>
+</head>
+
+<body style="padding: 50px;">
+    <div id="contenido">
+
+    </div>
+
+    <p id="resultado"></p>
+
+    <div>
+        <button class="btn btn-primary" onclick="corregir()">Corregir</button>
+        <button class="btn btn-warning" onclick="crearExamen()">Otro examen</button>
+    </div>
+    <script>
+        var chicas = {
+
+            "ADA"           : "Plataforma de análisis avanzado de malware.",
+            "AMPARO"        : "Implantación de seguridad y conformidad del ENS.",
+            "ANA"           : "Automatización y normalización de auditorías.",
+            "CARLA"         : "Protección y trazabilidad del dato.",
+            "CARMEN"        : "Defensa de ataques avanzados/APT.",
+            "CCNDroid"      : "Seguridad para Android.",
+            "CLARA"         : "Auditoría de Cumplimiento ENS/STIC en Sistemas Windows.",
+            "CLAUDIA"       : "Herramienta para la detección de amenazas complejas en el puesto de usuario.",
+            "microCLAUDIA"  : "Centro de vacunación.",
+            "ELENA"         : "Simulador de Técnicas de Cibervigilancia.",
+            "EMMA"          : "Visibilidad y control sobre la red.",
+            "GLORIA"        : "Gestor de logs para responder ante incidentes y amenazas.",
+            "INES"          : "Informe de Estado de Seguridad en el ENS.",
+            "IRIS"          : "Estado de la ciberseguridad.",
+            "LORETO"        : "Almacenamiento en la nube.",
+            "LUCIA"         : "Sistemas de Gestión Federada de Tickets.",
+            //"MARIA"       : "Plataforma Multiantivirus en tiempo real.",
+            "MARTA"         : "Análisis avanzados de ficheros.",
+            "MONICA"        : "Gestión de eventos e información de seguridad.",
+            "OLVIDO"        : "Borrado seguro de datos",
+            "PILAR"         : "Análisis y Gestión de Riesgos",
+            "REYES"         : "Intercambio de Información de Ciberamenazas.",
+            "ROCIO"         : "Inspección de Operación. Auditoría de configuraciones de dispositivos de red.",
+            "VANESA"        : "Grabaciones y emisiones de vídeo en streaming."
+
+        };
+
+        document.addEventListener("DOMContentLoaded", (e) => crearExamen());
+
+        var crearExamen = function () {
+
+            let test = Object.create({});
+            var nombres = Object.keys(chicas);
+            for (let i = 0; i < 10; i++) {
+                let nombre = nombres[nombres.length * Math.random() << 0];
+                if (!test.hasOwnProperty(nombre)) {
+                    let preguntas = [chicas[nombre]];
+                    Object.defineProperty(test, nombre, {
+                        value: preguntas,
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    });
+                    while (test[nombre].length < 4) {
+                        let pregunta = chicas[nombres[nombres.length * Math.random() << 0]];
+                        if (!test[nombre].includes(pregunta))
+                            test[nombre].push(pregunta);
+                    }
+                    test[nombre].sort(() => Math.random() - 0.5);
+
+                } else {
+                    i--;
+                }
+            }
+
+            let html = '';
+            for (const n in test) {
+
+                html += `<p>${n}:</p>`;
+                test[n].forEach(p => {
+                    html += `<label><input type="radio" name="${n}" value="${p}">${p}</label><br>`;
+                });
+                html += '<br>';
+            }
+            document.getElementById('contenido').innerHTML = html;
+        }
+
+
+        var corregir = function () {
+
+            let preguntasContestadas = 0;
+            let preguntasAcertadas = 0;
+            document.querySelectorAll('label').forEach(l => l.removeAttribute('class'));
+            document.querySelectorAll('input[type=radio]:checked').forEach(i => {
+                let label = i.parentNode;
+                if (i.value == chicas[i.name]) {
+                    label.setAttribute('class', 'text-success');
+                    preguntasAcertadas++;
+                } else {
+                    document.querySelector(`input[type=radio][name='${i.name}'][value='${chicas[i.name]}']`).parentNode.setAttribute('class', 'text-success');
+                    label.setAttribute('class', 'text-danger');
+                }
+                preguntasContestadas++;
+            });
+
+            document.getElementById('resultado').innerHTML = `<strong>Has acertado ${preguntasAcertadas} de ${preguntasContestadas} preguntas.</strong>`;
+
+        }
+    </script>
+</body>
+
+</html>

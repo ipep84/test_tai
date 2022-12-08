@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+    <title>Test de Distribuciones linux</title>
+</head>
+
+<body style="padding: 50px;">
+    <h3>Familias y paquetes linux</h3>
+    <div id="contenido">
+
+    </div>
+
+    <p id="resultado"></p>
+
+    <div>
+        <button class="btn btn-primary" onclick="corregir()">Corregir</button>
+        <button class="btn btn-warning" onclick="crearExamen()">Otro examen</button>
+    </div>
+    <script>
+        var errores = {
+
+
+          "Android":"Android -> Paquetes- APK",
+          "Wear OS":"Android -> Paquetes- APK",
+          "Antergos":"Arch -> Paquetes- Pacman (pkg.tar.xz)",
+          "Arch Linux":"Arch -> Paquetes- Pacman (pkg.tar.xz)",
+          "Manjaro":"Arch -> Paquetes- Pacman (pkg.tar.xz)",
+          "antiX":"Debian -> Paquetes- APT (.deb)",
+          "Debian":"Debian -> Paquetes- APT (.deb)",
+          "MX Linux":"Debian -> Paquetes- APT (.deb)",
+          "Solus":"Debian -> Paquetes- APT (.deb)",
+          "Sparky Linux":"Debian -> Paquetes- APT (.deb)",
+          "Deepin":"Debian -> Paquetes- APT (.deb)",
+          "Kali Linux":"Debian -> Paquetes- APT (.deb)",
+          "Kanotix":"Debian -> Paquetes- APT (.deb)",
+          "Knoppix":"Debian -> Paquetes- APT (.deb)",
+          "MAX":"Debian -> Paquetes- APT (.deb)",
+          "Bodhi":"Debian -> Paquetes- APT (.deb)",
+          "Elementary OS":"Debian -> Paquetes- APT (.deb)",
+          "Linux Mint":"Debian -> Paquetes- APT (.deb)",
+          "Pop OS":"Debian -> Paquetes- APT (.deb)",
+          "Trisquel":"Debian -> Paquetes- APT (.deb)",
+          "Ubuntu":"Debian -> Paquetes- APT (.deb)",
+          "Zorin":"Debian -> Paquetes- APT (.deb)",
+          "Chrome OS":"Enoch -> Paquetes- Portage",
+          "Gentoo Linux":"Enoch -> Paquetes- Portage",
+          "Sabayon Linux":"Enoch -> Paquetes- Portage",
+          "Ututo":"Enoch -> Paquetes- Portage",
+          "Puppy Linux":"Puppy -> Paquetes- ",
+          "Fedora":"Red Hat -> Paquetes- RPM",
+          "Tizen":"Red Hat -> Paquetes- RPM",
+          "Mandrake":"Red Hat -> Paquetes- RPM",
+          "Mandriva":"Red Hat -> Paquetes- RPM",
+          "Mageia":"Red Hat -> Paquetes- RPM",
+          "PCLinuxOS":"Red Hat -> Paquetes- RPM",
+          "RHEL":"Red Hat -> Paquetes- RPM",
+          "CentOS":"Red Hat -> Paquetes- RPM",
+          "Oracle Linux":"Red Hat -> Paquetes- RPM",
+          "Oracle Enterprise":"Red Hat -> Paquetes- RPM",
+          "CERN":"Red Hat -> Paquetes- RPM",
+          "Slackware":"Slackware -> Paquetes- tgz",
+          "openSUSE":"Slackware -> Paquetes- tgz"
+
+        };
+
+        document.addEventListener("DOMContentLoaded", (e) => crearExamen());
+
+        var crearExamen = function () {
+
+            let test = Object.create({});
+            var nombres = Object.keys(errores);
+            for (let i = 0; i < 10; i++) {
+                let nombre = nombres[nombres.length * Math.random() << 0];
+                if (!test.hasOwnProperty(nombre)) {
+                    let preguntas = [errores[nombre]];
+                    Object.defineProperty(test, nombre, {
+                        value: preguntas,
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    });
+                    while (test[nombre].length < 4) {
+                        let pregunta = errores[nombres[nombres.length * Math.random() << 0]];
+                        if (!test[nombre].includes(pregunta))
+                            test[nombre].push(pregunta);
+                    }
+                    test[nombre].sort(() => Math.random() - 0.5);
+
+                } else {
+                    i--;
+                }
+            }
+
+            let html = '';
+            for (const n in test) {
+
+                html += `<p>${n}:</p>`;
+                test[n].forEach(p => {
+                    html += `<label><input type="radio" name="${n}" value="${p}">${p}</label><br>`;
+                });
+                html += '<br>';
+            }
+            document.getElementById('contenido').innerHTML = html;
+        }
+
+
+        var corregir = function () {
+
+            let preguntasContestadas = 0;
+            let preguntasAcertadas = 0;
+            document.querySelectorAll('label').forEach(l => l.removeAttribute('class'));
+            document.querySelectorAll('input[type=radio]:checked').forEach(i => {
+                let label = i.parentNode;
+                if (i.value == errores[i.name]) {
+                    label.setAttribute('class', 'text-success');
+                    preguntasAcertadas++;
+                } else {
+                    document.querySelector(`input[type=radio][name='${i.name}'][value='${errores[i.name]}']`).parentNode.setAttribute('class', 'text-success');
+                    label.setAttribute('class', 'text-danger');
+                }
+                preguntasContestadas++;
+            });
+
+            document.getElementById('resultado').innerHTML = `<strong>Has acertado ${preguntasAcertadas} de ${preguntasContestadas} preguntas.</strong>`;
+
+        }
+    </script>
+</body>
+
+</html>

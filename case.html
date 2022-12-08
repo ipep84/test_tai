@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+    <title>Test Herramientas CASE</title>
+</head>
+
+<body style="padding: 50px;">
+    <h3>Herramientas CASE</h3>
+    <div id="contenido">
+
+    </div>
+
+    <p id="resultado"></p>
+
+    <div>
+        <button class="btn btn-primary" onclick="corregir()">Corregir</button>
+        <button class="btn btn-warning" onclick="crearExamen()">Otro examen</button>
+    </div>
+    <script>
+        var errores = {
+
+
+          "Jira":"1 - Gestión de Proyectos   ",
+          "Jixee":"1 - Gestión de Proyectos   ",
+          "OpenProject":"1 - Gestión de Proyectos   ",
+          "Redmine":"1 - Gestión de Proyectos   ",
+          "Sprintly":"1 - Gestión de Proyectos   ",
+          "Stackfield":"1 - Gestión de Proyectos   ",
+          "Android Studio":"1 - IDE   ",
+          "Eclipse":"1 - IDE   ",
+          "IntelliJ IDEA":"1 - IDE   ",
+          "Jcreator":"1 - IDE   ",
+          "JSource":"1 - IDE   ",
+          "NetBeans":"1 - IDE   ",
+          "Oracle JDeveloper":"1 - IDE   Oracle",
+          "Rational Application Developer":"1 - IDE   IBM",
+          "Gradle":"2 - Automatización de Tareas  Groovy ",
+          "Maven":"2 - Automatización de Tareas  Java Apache",
+          "Grunt":"2 - Automatización de Tareas  Javascript ",
+          "Gulp":"2 - Automatización de Tareas  Javascript ",
+          "Ant":"2 - Automatización de Tareas   Apache",
+          "AppVeyor":"2 - Integración Continua   ",
+          "Autorabit":"2 - Integración Continua   ",
+          "Bamboo":"2 - Integración Continua   ",
+          "Buddy":"2 - Integración Continua   ",
+          "Buildbot":"2 - Integración Continua   ",
+          "BuildMaster":"2 - Integración Continua   ",
+          "Circle CI":"2 - Integración Continua   ",
+          "Codeship":"2 - Integración Continua   ",
+          "CruiseControl":"2 - Integración Continua   ",
+          "GitLab CI":"2 - Integración Continua   ",
+          "GoCD":"2 - Integración Continua   ",
+          "Hudson":"2 - Integración Continua   ",
+          "Integrity":"2 - Integración Continua   ",
+          "Jenkins":"2 - Integración Continua   ",
+          "Nevercode":"2 - Integración Continua   ",
+          "Perforce Helix":"2 - Integración Continua   ",
+          "Semaphore":"2 - Integración Continua   ",
+          "Solano":"2 - Integración Continua   ",
+          "Strider":"2 - Integración Continua   ",
+          "Team Foundation Server":"2 - Integración Continua   ",
+          "TeamCity":"2 - Integración Continua   ",
+          "ThoughtWorks":"2 - Integración Continua   ",
+          "Travis CI":"2 - Integración Continua   ",
+          "":"3 - Depuración Código   ",
+          "Javadoc":"4 - Documentación  Java ",
+          "aqua":"5 - Gestión de Pruebas   ",
+          "HP Quality Center":"5 - Gestión de Pruebas   ",
+          "IBM Rational Quality Manager":"5 - Gestión de Pruebas   ",
+          "Kualitee":"5 - Gestión de Pruebas   ",
+          "Meliora TestLab":"5 - Gestión de Pruebas   ",
+          "PractiTest":"5 - Gestión de Pruebas   ",
+          "QACoverage":"5 - Gestión de Pruebas   ",
+          "qTest":"5 - Gestión de Pruebas   ",
+          "Requirements and Test Management for Jira (RTM)":"5 - Gestión de Pruebas   ",
+          "SPIRATEST by Inflectra":"5 - Gestión de Pruebas   ",
+          "Test Collab":"5 - Gestión de Pruebas   ",
+          "TestFLO for JIRA":"5 - Gestión de Pruebas   ",
+          "TestLink":"5 - Gestión de Pruebas   ",
+          "Testpad":"5 - Gestión de Pruebas   ",
+          "TestRail":"5 - Gestión de Pruebas   ",
+          "XQual":"5 - Gestión de Pruebas   ",
+          "Xray – Cutting Edge Test Management":"5 - Gestión de Pruebas   ",
+          "Zephyr":"5 - Gestión de Pruebas   ",
+          "Zephyr for Jira":"5 - Gestión de Pruebas   ",
+          "Cucumber":"5 - Pruebas de Comportamiento   ",
+          "Appvance":"5 - Pruebas de Rendimiento   ",
+          "JMeter":"5 - Pruebas de Rendimiento   Apache",
+          "LoadComplete":"5 - Pruebas de Rendimiento   ",
+          "LoadImpact":"5 - Pruebas de Rendimiento   ",
+          "LoadNinja":"5 - Pruebas de Rendimiento   SmartBear",
+          "LoadRunner":"5 - Pruebas de Rendimiento   Micro Focus",
+          "Loadster":"5 - Pruebas de Rendimiento   ",
+          "LoadUI NG Pro":"5 - Pruebas de Rendimiento   SmartBear",
+          "LoadView":"5 - Pruebas de Rendimiento   ",
+          "NeoLoad":"5 - Pruebas de Rendimiento   ",
+          "Rational Performance Tester":"5 - Pruebas de Rendimiento   IBM",
+          "SmartMeter.io":"5 - Pruebas de Rendimiento   ",
+          "Testing Anywhere":"5 - Pruebas de Rendimiento   ",
+          "WAPT":"5 - Pruebas de Rendimiento   ",
+          "WebLOAD":"5 - Pruebas de Rendimiento   ",
+          "Appium":"5 - Pruebas Funcionales   ",
+          "EggPlant":"5 - Pruebas Funcionales   ",
+          "JMeter":"5 - Pruebas Funcionales   Apache",
+          "Katalon Studio":"5 - Pruebas Funcionales   ",
+          "Postman":"5 - Pruebas Funcionales   ",
+          "QA Wizard":"5 - Pruebas Funcionales   ",
+          "Ranorex":"5 - Pruebas Funcionales   ",
+          "Rational Functional Tester (RFT)":"5 - Pruebas Funcionales   IBM",
+          "Sahi Pro":"5 - Pruebas Funcionales   ",
+          "Selenium":"5 - Pruebas Funcionales   ",
+          "Silk Test":"5 - Pruebas Funcionales   ",
+          "SoapUI":"5 - Pruebas Funcionales   ",
+          "Squish":"5 - Pruebas Funcionales   ",
+          "TestComplete":"5 - Pruebas Funcionales   ",
+          "Tricentis Tosca":"5 - Pruebas Funcionales   ",
+          "UFT (Unified Functional Testing)":"5 - Pruebas Funcionales   ",
+          "Watir":"5 - Pruebas Funcionales   ",
+          "MSTest/Visual Studio":"5 - Pruebas Unitarias   .NET ",
+          "NUnit":"5 - Pruebas Unitarias  .NET ",
+          "xUnit.net":"5 - Pruebas Unitarias  .NET ",
+          "HTMLUnit":"5 - Pruebas Unitarias  HTML ",
+          "JMock":"5 - Pruebas Unitarias  Java ",
+          "JUnit":"5 - Pruebas Unitarias  Java ",
+          "Mockito":"5 - Pruebas Unitarias  Java ",
+          "TestNG":"5 - Pruebas Unitarias  Java ",
+          "DBUnit":"5 - Pruebas Unitarias  Java (DB) ",
+          "Cactus":"5 - Pruebas Unitarias  Java (EJB, JSP) ",
+          "JSFUnit":"5 - Pruebas Unitarias  Java (JSF) ",
+          "JSPUnit":"5 - Pruebas Unitarias  Java (JSP) ",
+          "TagUnit":"5 - Pruebas Unitarias  Java (JSP) ",
+          "ServletUnit":"5 - Pruebas Unitarias  Java (Servlets) ",
+          "JUnitEE":"5 - Pruebas Unitarias  Java EE ",
+          "Arquillian":"5 - Pruebas Unitarias  Java Middleware ",
+          "AVA":"5 - Pruebas Unitarias  Javascript ",
+          "Jasmine":"5 - Pruebas Unitarias  Javascript ",
+          "JSUnit":"5 - Pruebas Unitarias  Javascript ",
+          "MochaJS":"5 - Pruebas Unitarias  Javascript ",
+          "Karma":"5 - Pruebas Unitarias  Javascript (Angular) ",
+          "Qunit":"5 - Pruebas Unitarias  Javascript (jQuery) ",
+          "JEST":"5 - Pruebas Unitarias  Javascript (React) ",
+          "Tagit ":"5 - Pruebas Unitarias  Javascript, JSP, Jquery ",
+          "Atoum":"5 - Pruebas Unitarias  PHP ",
+          "Behat":"5 - Pruebas Unitarias  PHP ",
+          "Codeception":"5 - Pruebas Unitarias  PHP ",
+          "PHPUnit":"5 - Pruebas Unitarias  PHP ",
+          "SimpleTest":"5 - Pruebas Unitarias  PHP ",
+          "StoryPlayer":"5 - Pruebas Unitarias  PHP ",
+          "XMLUnit":"5 - Pruebas Unitarias  XML ",
+          "Airbrake":"5 - Seguimiento de Errores   ",
+          "Backlog":"5 - Seguimiento de Errores   ",
+          "BugHerd":"5 - Seguimiento de Errores   ",
+          "BugHost":"5 - Seguimiento de Errores   ",
+          "Bugyard":"5 - Seguimiento de Errores   ",
+          "Bugzilla":"5 - Seguimiento de Errores   ",
+          "DoneDone":"5 - Seguimiento de Errores   ",
+          "FogBugz":"5 - Seguimiento de Errores   ",
+          "JIRA":"5 - Seguimiento de Errores   ",
+          "Kualitee":"5 - Seguimiento de Errores   ",
+          "Lighthouse":"5 - Seguimiento de Errores   ",
+          "Mantis BT":"5 - Seguimiento de Errores   ",
+          "Marker.io":"5 - Seguimiento de Errores   ",
+          "Micro Focus ALM/Quality Center":"5 - Seguimiento de Errores   Micro Focus",
+          "monday.com":"5 - Seguimiento de Errores   ",
+          "Rational ClearQuest":"5 - Seguimiento de Errores   IBM",
+          "Redmine":"5 - Seguimiento de Errores   ",
+          "ReQtest":"5 - Seguimiento de Errores   ",
+          "Rollbar":"5 - Seguimiento de Errores   ",
+          "The Bug Genie":"5 - Seguimiento de Errores   ",
+          "Trac":"5 - Seguimiento de Errores   ",
+          "Trackduck":"5 - Seguimiento de Errores   ",
+          "Zoho BT":"5 - Seguimiento de Errores   ",
+          "AWS CodeCommit":"6 - Control de Versiones   Amazon",
+          "Beanstalk":"6 - Control de Versiones   ",
+          "Bitbucket":"6 - Control de Versiones   ",
+          "CVS (Concurrent Versions System)":"6 - Control de Versiones   ",
+          "GitHub":"6 - Control de Versiones   ",
+          "GitLab":"6 - Control de Versiones   ",
+          "Mercurial":"6 - Control de Versiones   ",
+          "PerForce":"6 - Control de Versiones   ",
+          "Subversion (SVN)":"6 - Control de Versiones   Apache",
+          "Team Foundation Server":"6 - Control de Versiones   Microsoft",
+          "Examinator":"7 - Herramientas Accesibilidad   ",
+          "HERA":"7 - Herramientas Accesibilidad   ",
+          "TAW":"7 - Herramientas Accesibilidad"
+
+        };
+
+        document.addEventListener("DOMContentLoaded", (e) => crearExamen());
+
+        var crearExamen = function () {
+
+            let test = Object.create({});
+            var nombres = Object.keys(errores);
+            for (let i = 0; i < 10; i++) {
+                let nombre = nombres[nombres.length * Math.random() << 0];
+                if (!test.hasOwnProperty(nombre)) {
+                    let preguntas = [errores[nombre]];
+                    Object.defineProperty(test, nombre, {
+                        value: preguntas,
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    });
+                    while (test[nombre].length < 4) {
+                        let pregunta = errores[nombres[nombres.length * Math.random() << 0]];
+                        if (!test[nombre].includes(pregunta))
+                            test[nombre].push(pregunta);
+                    }
+                    test[nombre].sort(() => Math.random() - 0.5);
+
+                } else {
+                    i--;
+                }
+            }
+
+            let html = '';
+            for (const n in test) {
+
+                html += `<p>${n}:</p>`;
+                test[n].forEach(p => {
+                    html += `<label><input type="radio" name="${n}" value="${p}">${p}</label><br>`;
+                });
+                html += '<br>';
+            }
+            document.getElementById('contenido').innerHTML = html;
+        }
+
+
+        var corregir = function () {
+
+            let preguntasContestadas = 0;
+            let preguntasAcertadas = 0;
+            document.querySelectorAll('label').forEach(l => l.removeAttribute('class'));
+            document.querySelectorAll('input[type=radio]:checked').forEach(i => {
+                let label = i.parentNode;
+                if (i.value == errores[i.name]) {
+                    label.setAttribute('class', 'text-success');
+                    preguntasAcertadas++;
+                } else {
+                    document.querySelector(`input[type=radio][name='${i.name}'][value='${errores[i.name]}']`).parentNode.setAttribute('class', 'text-success');
+                    label.setAttribute('class', 'text-danger');
+                }
+                preguntasContestadas++;
+            });
+
+            document.getElementById('resultado').innerHTML = `<strong>Has acertado ${preguntasAcertadas} de ${preguntasContestadas} preguntas.</strong>`;
+
+        }
+    </script>
+</body>
+
+</html>

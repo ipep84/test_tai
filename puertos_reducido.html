@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+    <title>Puertos reducido </title>
+</head>
+
+<body style="padding: 50px;">
+    <h3>Puertos protocolos más importantes</h3>
+<br>
+
+    <div id="contenido">
+
+    </div>
+
+    <p id="resultado"></p>
+
+    <div>
+        <button class="btn btn-primary" onclick="corregir()">Corregir</button>
+        <button class="btn btn-warning" onclick="crearExamen()">Otro examen</button>
+    </div>
+    <script>
+        var errores = {
+          "Proto + info":"Puerto",
+        "FTP - FTP de Datos":"20 TCP",
+        "FTP - FTP de Control":"21 TCP",
+        "SSH - SSH, SCP, SFTP":"22 TCP",
+        "telnet - ":"23 TCP",
+        "SMTP - ":"25 TCP",
+        "time - Time Protocol":"37 TCP",
+        "nameserver - Servicio de nombres de Internet":"42 TCP",
+        "DNS - ":"53 TCP/UDP",
+        "Oracle SQL.net - Software de red que permite acceso remoto entre los programas y la base de datos Oracle.":"66 TCP/UDP",
+        "DHCP - También para BOOTP.":"67 UDP",
+        "DHCP - También para BOOTP.":"68 UDP",
+        "TFTP - ":"69 UDP",
+        "HTTP - ":"80 TCP",
+        "kerberos - ":"88 TCP",
+        "POP3 - ":"110 TCP",
+        "SFTP - ":"115 TCP",
+        "SQL Servicios - ":"118 TCP/UDP",
+        "NTP - ":"123 UDP",
+        "IMAP - ":"143 TCP",
+        "SGMP - ":"153 UDP",
+        "SNMP - ":"161 UDP",
+        "SNMPTRAP - ":"162 UDP",
+        "mailq - ":"174 TCP",
+        "QMTP - ":"209 TCP",
+        "IPX - ":"213 TCP",
+        "LDAP - ":"389 TCP",
+        "HTTPS - ":"443 TCP",
+        "SNPP - ":"444 TCP",
+        "microsoft-ds - Active Directory de Microsoft y SMB":"445 TCP",
+        "SMTPS - ":"465 TCP",
+        "IPSec - IPSec ISAKMP, Autoridad de Seguridad Local / IKE":"500 UDP",
+        "RIP - RIP Routing Information Protocol (Protocolo de Información de Enrutamiento)":"520 UDP",
+        "RIPNG - RIP Routing Information Protocol IPv6 (Protocolo de Información de Enrutamiento Internet v6)":"521 UDP",
+        "DHCPv6 - También para BOOTP.":"546 UDP",
+        "DHCPv6 - También para BOOTP.":"547 UDP",
+        "SMTP - SMTP sobre TLS":"587 TCP",
+        "FTP - FTP de Datos sobre TLS":"989 TCP",
+        "FTP - FTP de Control sobre TLS":"990 TCP",
+        "telnet - Telnet sobre TLS":"992 TCP",
+        "IMAP - IMAP4 sobre TLS":"993 TCP",
+        "POP3 - POP3 sobre TLS":"995 TCP",
+        "SQL Server - Microsoft":"1433 TCP",
+        "SQL Monitor - Microsoft":"1434 TCP",
+        "Oracle - Puerto de Escucha de Oracle":"1521 TCP",
+        "L2TP - Enrutamiento y Acceso Remoto para VPN con L2TP.":"1701 UDP",
+        "PPTP - Enrutamiento y Acceso Remoto para VPN con PPTP.":"1723 TCP",
+        "NFS - NFS Archivos del sistema de red":"2049 TCP",
+        "MySQL - ":"3306 TCP",
+        "RDP - RDP (Remote Desktop Protocol) Terminal Server":"3389 TCP",
+        "SVN - Subversion (sistema de control de versiones)":"3690 TCP",
+        "PostgreSQL - ":"5432 TCP",
+        "HTTP - HTTP alternativo usado por Apache Tomcat":"8080 TCP"
+
+      };
+
+      document.addEventListener("DOMContentLoaded", (e) => crearExamen());
+
+      var crearExamen = function () {
+
+          let test = Object.create({});
+          var nombres = Object.keys(errores);
+          for (let i = 0; i < 10; i++) {
+              k++;
+              let nombre = nombres[nombres.length * Math.random() << 0];
+              if (!test.hasOwnProperty(nombre)) {
+                  let preguntas = [errores[nombre]];
+                  Object.defineProperty(test, nombre, {
+                      value: preguntas,
+                      writable: true,
+                      enumerable: true,
+                      configurable: true
+                  });
+                  while (test[nombre].length < 4) {
+                      let pregunta = errores[nombres[nombres.length * Math.random() << 0]];
+                      if (!test[nombre].includes(pregunta))
+                          test[nombre].push(pregunta);
+                  }
+                  test[nombre].sort(() => Math.random() - 0.5);
+
+              } else {
+                  i--;
+              }
+          }
+
+          let html = '';
+            var k=1;
+          for (const n in test) {
+
+
+              html += `<p>${k})&nbsp<strong>${n}:</strong></p>`;
+              test[n].forEach(p => {
+                  html += `<label><input type="radio" name="${n}" value="${p}"> &nbsp ${p}</label><br>`;
+              });
+              html += '<br>';
+              k++;
+          }
+          document.getElementById('contenido').innerHTML = html;
+      }
+
+
+      var corregir = function () {
+
+          let preguntasContestadas = 0;
+          let preguntasAcertadas = 0;
+          document.querySelectorAll('label').forEach(l => l.removeAttribute('class'));
+          document.querySelectorAll('input[type=radio]:checked').forEach(i => {
+              let label = i.parentNode;
+              if (i.value == errores[i.name]) {
+                  label.setAttribute('class', 'text-success');
+                  preguntasAcertadas++;
+              } else {
+                  document.querySelector(`input[type=radio][name='${i.name}'][value='${errores[i.name]}']`).parentNode.setAttribute('class', 'text-success');
+                  label.setAttribute('class', 'text-danger');
+              }
+              preguntasContestadas++;
+          });
+
+          document.getElementById('resultado').innerHTML = `<strong>Has acertado ${preguntasAcertadas} de ${preguntasContestadas} preguntas.</strong>`;
+
+      }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+    <title>802.XXx </title>
+</head>
+
+<body style="padding: 50px;">
+    <h3>802.XXx  (Faltan los 802.3 - se ampliará)</h3>
+<br>
+
+    <div id="contenido">
+
+    </div>
+
+    <p id="resultado"></p>
+
+    <div>
+        <button class="btn btn-primary" onclick="corregir()">Corregir</button>
+        <button class="btn btn-warning" onclick="crearExamen()">Otro examen</button>
+    </div>
+    <script>
+        var errores = {
+          "IEEE 802.XX.YY":"Concatenado",
+          "IEEE 802. 1":"Normalización de interfaz  ",
+          "IEEE 802. 1 _d":"Bridges MAC / Spanning Tree   ",
+          "IEEE 802. 1 _q":"Virtual LANs (VLAN)  ",
+          "IEEE 802. 1 _x":"Port-based Network Access Control (PNAC)  ",
+          "IEEE 802. 1 ab":"Link Layer Discovery Protocol (LLDP)  ",
+          "IEEE 802. 1 ac":"MACsec  ",
+          "IEEE 802. 1 as":"Precision Time Protocol (PTP)  ",
+          "IEEE 802. 1 ax":"Link Aggregation  ",
+          "IEEE 802. 1 ba":"Audio Video Bridging (AVB)  ",
+          "IEEE 802. 2":"Control de enlace lógico (LLC)  ",
+          "IEEE 802. 3":"CSMA / CD (ETHERNET)  ",
+          "IEEE 802. 5":"Token ring LAN (topología en anillo)  ",
+          "IEEE 802.11":"Redes inalámbricas WLAN. (Wi-Fi)  ",
+          "IEEE 802.11 _a":"WIFI 1  ",
+          "IEEE 802.11 _b":"WIFI 2  ",
+          "IEEE 802.11 _g":"WIFI 3  ",
+          "IEEE 802.11 _i":"WPA2  ",
+          "IEEE 802.11 _n":"WIFI 4  2,4 y 5 GHz. OFDMA. MIMO. 40 MHz.",
+          "IEEE 802.11 ac":"WIFI 5  5GHz. 8 flujos MIMO. Soporta modulación 256-QAM. 160 MHz.",
+          "IEEE 802.11 ad":"WiGig  57-71 GHz. ",
+          "IEEE 802.11 af":"White-Fi/Super Wi-Fi  54-790 MHz.",
+          "IEEE 802.11 ah":"WIFI HaLow  900 MHz.",
+          "IEEE 802.11 ax":"WIFI 6  2,4 y 5 GHz. OFDMA. MIMO y MU-MIMO. Soporta modulación 1024-QAM",
+          "IEEE 802.15":"WPAN (Bluetooth)  ",
+          "IEEE 802.16":"WIMAX  ",
+          "IEEE 802.17":"Anillo de paquete elástico script  ",
+          "IEEE 802.19":"Grupo de Asesoría Técnica sobre Coexistencia  ",
+          "IEEE 802.20":"Mobile Broadband Wireless Access (MBWA)  ",
+          "IEEE 802.21":"Media Independent Handoff  ",
+          "IEEE 802.22":"Wireless Regional Area Network"
+
+      };
+
+      document.addEventListener("DOMContentLoaded", (e) => crearExamen());
+
+      var crearExamen = function () {
+
+          let test = Object.create({});
+          var nombres = Object.keys(errores);
+          for (let i = 0; i < 10; i++) {
+              k++;
+              let nombre = nombres[nombres.length * Math.random() << 0];
+              if (!test.hasOwnProperty(nombre)) {
+                  let preguntas = [errores[nombre]];
+                  Object.defineProperty(test, nombre, {
+                      value: preguntas,
+                      writable: true,
+                      enumerable: true,
+                      configurable: true
+                  });
+                  while (test[nombre].length < 4) {
+                      let pregunta = errores[nombres[nombres.length * Math.random() << 0]];
+                      if (!test[nombre].includes(pregunta))
+                          test[nombre].push(pregunta);
+                  }
+                  test[nombre].sort(() => Math.random() - 0.5);
+
+              } else {
+                  i--;
+              }
+          }
+
+          let html = '';
+            var k=1;
+          for (const n in test) {
+
+
+              html += `<p>${k})&nbsp<strong>${n}:</strong></p>`;
+              test[n].forEach(p => {
+                  html += `<label><input type="radio" name="${n}" value="${p}"> &nbsp ${p}</label><br>`;
+              });
+              html += '<br>';
+              k++;
+          }
+          document.getElementById('contenido').innerHTML = html;
+      }
+
+
+      var corregir = function () {
+
+          let preguntasContestadas = 0;
+          let preguntasAcertadas = 0;
+          document.querySelectorAll('label').forEach(l => l.removeAttribute('class'));
+          document.querySelectorAll('input[type=radio]:checked').forEach(i => {
+              let label = i.parentNode;
+              if (i.value == errores[i.name]) {
+                  label.setAttribute('class', 'text-success');
+                  preguntasAcertadas++;
+              } else {
+                  document.querySelector(`input[type=radio][name='${i.name}'][value='${errores[i.name]}']`).parentNode.setAttribute('class', 'text-success');
+                  label.setAttribute('class', 'text-danger');
+              }
+              preguntasContestadas++;
+          });
+
+          document.getElementById('resultado').innerHTML = `<strong>Has acertado ${preguntasAcertadas} de ${preguntasContestadas} preguntas.</strong>`;
+
+      }
+  </script>
+</body>
+
+</html>

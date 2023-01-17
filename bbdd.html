@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+    <title>Bases de datos</title>
+</head>
+
+<body style="padding: 50px;">
+    <h3>Bases de datos</h3>
+<br>
+
+    <div id="contenido">
+
+    </div>
+
+    <p id="resultado"></p>
+
+    <div>
+        <button class="btn btn-primary" onclick="corregir()">Corregir</button>
+        <button class="btn btn-warning" onclick="crearExamen()">Otro examen</button>
+    </div>
+    <script>
+        var errores = {
+          "MySQL - Oracle - LIBRE":"RELACIONAL",
+          "PostgreSQL - The PostgreSQL Global Development Group - LIBRE":"RELACIONAL",
+          "Microsoft SQL Server - Microsoft - Proprietario":"RELACIONAL",
+          "SQLite - SQLite Consortium - LIBRE":"RELACIONAL",
+          "MariaDB - MariaDB Corporation - LIBRE":"RELACIONAL",
+          "Oracle Database - Oracle - Propietario":"RELACIONAL",
+          "IBM Db2 - IBM - Propietario":"RELACIONAL",
+          "Microsoft Access - Microsoft - Propietario":"RELACIONAL",
+          "Sybase ASE - SAP - Propietario":"RELACIONAL",
+          "Firebird - Firebird Project - LIBRE":"RELACIONAL",
+          "Informix - IBM - Propietario":"RELACIONAL",
+          "Teradata - Teradata - Propietario":"RELACIONAL",
+          "SAP HANA - SAP - Propietario":"RELACIONAL",
+          "IBM Informix - IBM - Propietario":"RELACIONAL",
+          "Microsoft Azure SQL Database - Microsoft - Propietario":"RELACIONAL",
+          "Redis - Redis Labs - LIBRE":"NO SQL - CLAVE/VALOR",
+          "Riak - Basho Technologies - LIBRE":"NO SQL - CLAVE/VALOR",
+          "Aerospike - Aerospike, Inc. - LIBRE":"NO SQL - CLAVE/VALOR",
+          "Hazelcast - Hazelcast - LIBRE":"NO SQL - CLAVE/VALOR",
+          "Memcached - Danga Interactive - LIBRE":"NO SQL - CLAVE/VALOR",
+          "Amazon DynamoDB - Amazon - Propietario":"NO SQL - CLAVE/VALOR",
+          "Oracle NoSQL Database - Oracle - Propietario":"NO SQL - CLAVE/VALOR",
+          "Couchbase - Couchbase - Propietario":"NO SQL - CLAVE/VALOR",
+          "RocksDB - Facebook - LIBRE":"NO SQL - CLAVE/VALOR",
+          "LMDB - Symas Corporation - LIBRE":"NO SQL - CLAVE/VALOR",
+          "Apache Cassandra - Apache Software Foundation - LIBRE":"NO SQL - COLUMNAS",
+          "Hbase - Apache Software Foundation - LIBRE":"NO SQL - COLUMNAS",
+          "Hypertable - Hypertable, Inc - LIBRE":"NO SQL - COLUMNAS",
+          "Google Bigtable - Google - Propietario":"NO SQL - COLUMNAS",
+          "Amazon SimpleDB - Amazon - Propietario":"NO SQL - COLUMNAS",
+          "Microsoft Azure Table Storage - Microsoft - Propietario":"NO SQL - COLUMNAS",
+          "Cloudera Hadoop - Cloudera - LIBRE":"NO SQL - COLUMNAS",
+          "Vertica - HPE - Propietario":"NO SQL - COLUMNAS",
+          "Amazon Redshift - Amazon - Propietario":"NO SQL - COLUMNAS",
+          "Google Cloud Bigtable - Google - Propietario":"NO SQL - COLUMNAS",
+          "MongoDB - MongoDB Inc. - LIBRE":"DOCUMENTALES",
+          "Couchbase - Couchbase Inc. - LIBRE":"DOCUMENTALES",
+          "RavenDB - Hibernating Rhinos - LIBRE":"DOCUMENTALES",
+          "CouchDB - Apache Software Foundation - LIBRE":"DOCUMENTALES",
+          "RethinkDB - RethinkDB Inc. - LIBRE":"DOCUMENTALES",
+          "ArangoDB - ArangoDB GmbH - LIBRE":"DOCUMENTALES",
+          "RavenDB - Hibernating Rhinos - LIBRE":"DOCUMENTALES",
+          "Redis - Redis Labs - LIBRE":"DOCUMENTALES",
+          "MarkLogic - MarkLogic Corporation - LIBRE":"DOCUMENTALES",
+          "Firebase Realtime Database - Google LLC - LIBRE":"DOCUMENTALES",
+          "Neo4j - Neo Technology - Propietario":"GRAFOS",
+          "Amazon Neptune - Amazon Web Services ":"GRAFOS",
+          "TigerGraph - TigerGraph Inc - Propietario":"GRAFOS",
+          "JanusGraph - The Linux Foundation - LIBRE":"GRAFOS",
+          "ArangoDB - ArangoDB GmbH - LIBRE":"GRAFOS",
+          "RedisGraph - Redis Labs - Propietario":"GRAFOS",
+          "OrientDB - OrientDB Ltd - Propietario":"GRAFOS",
+          "GraphDB - Ontotext - Propietario":"GRAFOS",
+          "Virtuoso - OpenLink Software - Propietario":"GRAFOS",
+          "Stardog - Stardog Union - Propietario":"GRAFOS",
+          "ObjectDB - ObjectDB Software - LIBRE":"ORIENTADAS A OBJETOS",
+          "Zope Object Database (ZODB) - LIBRE":"ORIENTADAS A OBJETOS",
+          "Objectivity/DB - Objectivity, Inc - Propietario":"ORIENTADAS A OBJETOS",
+          "Objectivity/DB - Objectivity, Inc - Propietario":"ORIENTADAS A OBJETOS",
+          "Versant Object Database - Versant Corporation - Propietario":"ORIENTADAS A OBJETOS",
+          "Matisse - Matisse Software - Propietario":"ORIENTADAS A OBJETOS",
+          "db4o - db4objects - LIBRE":"ORIENTADAS A OBJETOS",
+          "ObjectStore - Progress Software - Propietario":"ORIENTADAS A OBJETOS",
+          "Poet - Poet Software - Propietario":"ORIENTADAS A OBJETOS"
+
+
+      };
+
+      document.addEventListener("DOMContentLoaded", (e) => crearExamen());
+
+      var crearExamen = function () {
+
+          let test = Object.create({});
+          var nombres = Object.keys(errores);
+          for (let i = 0; i < 10; i++) {
+              k++;
+              let nombre = nombres[nombres.length * Math.random() << 0];
+              if (!test.hasOwnProperty(nombre)) {
+                  let preguntas = [errores[nombre]];
+                  Object.defineProperty(test, nombre, {
+                      value: preguntas,
+                      writable: true,
+                      enumerable: true,
+                      configurable: true
+                  });
+                  while (test[nombre].length < 4) {
+                      let pregunta = errores[nombres[nombres.length * Math.random() << 0]];
+                      if (!test[nombre].includes(pregunta))
+                          test[nombre].push(pregunta);
+                  }
+                  test[nombre].sort(() => Math.random() - 0.5);
+
+              } else {
+                  i--;
+              }
+          }
+
+          let html = '';
+            var k=1;
+          for (const n in test) {
+
+
+              html += `<p>${k})&nbsp<strong>${n}:</strong></p>`;
+              test[n].forEach(p => {
+                  html += `<label><input type="radio" name="${n}" value="${p}"> &nbsp ${p}</label><br>`;
+              });
+              html += '<br>';
+              k++;
+          }
+          document.getElementById('contenido').innerHTML = html;
+      }
+
+
+      var corregir = function () {
+
+          let preguntasContestadas = 0;
+          let preguntasAcertadas = 0;
+          document.querySelectorAll('label').forEach(l => l.removeAttribute('class'));
+          document.querySelectorAll('input[type=radio]:checked').forEach(i => {
+              let label = i.parentNode;
+              if (i.value == errores[i.name]) {
+                  label.setAttribute('class', 'text-success');
+                  preguntasAcertadas++;
+              } else {
+                  document.querySelector(`input[type=radio][name='${i.name}'][value='${errores[i.name]}']`).parentNode.setAttribute('class', 'text-success');
+                  label.setAttribute('class', 'text-danger');
+              }
+              preguntasContestadas++;
+          });
+
+          document.getElementById('resultado').innerHTML = `<strong>Has acertado ${preguntasAcertadas} de ${preguntasContestadas} preguntas.</strong>`;
+
+      }
+  </script>
+</body>
+
+</html>
